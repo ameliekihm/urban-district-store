@@ -9,6 +9,7 @@ import NewProduct from './pages/NewProduct';
 import ProductDetail from './pages/ProductDetail';
 import MyCart from './pages/MyCart';
 import NotFound from './pages/NotFound';
+import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
   {
