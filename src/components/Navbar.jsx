@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { TfiPencil } from 'react-icons/tfi';
 import { HiMiniShoppingBag } from 'react-icons/hi2';
+import { login } from '../api/firebase';
 
 export default function Navbar() {
   return (
-    <header className='flex justify-between border-b border-gray-300 p-2'>
+    <header className='flex justify-between border-b border-gray-200 p-2'>
       <Link
         to='/'
         className='flex items-center text-4xl text-brand font-semibold'
@@ -19,7 +20,7 @@ export default function Navbar() {
         <Link to='/products/new' className='text-2xl'>
           <TfiPencil />
         </Link>
-        <button>Login</button>
+        <button onClick={login}>Login</button>
       </nav>
     </header>
   );
