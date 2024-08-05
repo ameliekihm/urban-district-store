@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: '#0cf050',
+        brand: '#18ed3b',
       },
       fontFamily: {
         barlow: ['"Barlow Condensed"', 'sans-serif'],
