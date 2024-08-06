@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TfiPencil } from 'react-icons/tfi';
 import { HiMiniShoppingBag } from 'react-icons/hi2';
-import { login, logout, onUserStateChange } from '../api/firebase';
 import User from './User';
 import Button from './ui/Button';
+import { useAuthContext } from './context/AuthContext';
 
 export default function Navbar() {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    onUserStateChange((user) => {
-      setUser(user);
-    });
-  }, []);
-
+  const { user, login, logout } = useAuthContext();
   return (
     <header className='flex justify-between border-b border-gray-200 p-2'>
       <Link
@@ -31,12 +23,14 @@ export default function Navbar() {
         >
           Products
         </Link>
-        <Link
-          className='transition-all duration-300 hover:scale-110'
-          to='/carts'
-        >
-          Carts
-        </Link>
+        {user && (
+          <Link
+            className='transition-all duration-300 hover:scale-110'
+            to='/carts'
+          >
+            Carts
+          </Link>
+        )}
         {user && user.isAdmin && (
           <Link
             to='/products/new'
