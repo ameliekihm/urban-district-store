@@ -9,7 +9,10 @@ export default function Navbar() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    onUserStateChange(setUser);
+    onUserStateChange((user) => {
+      console.log(user);
+      setUser(user);
+    });
   }, []);
 
   return (
@@ -21,7 +24,7 @@ export default function Navbar() {
         <HiMiniShoppingBag />
         <h1>Neon District</h1>
       </Link>
-      <nav className='flex items-center gap-5 font-semibold text-xl'>
+      <nav className='flex items-center gap-5 font-semibold text-lg'>
         <Link to='/products'>Products</Link>
         <Link to='/carts'>Carts</Link>
         <Link to='/products/new' className='text-2xl'>
