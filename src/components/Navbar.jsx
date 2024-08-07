@@ -14,7 +14,7 @@ export default function Navbar() {
         className='flex items-center text-4xl text-brand font-semibold'
       >
         <HiMiniShoppingBag />
-        <h1>Neon District</h1>
+        <h1>URBAN DISTRICT</h1>
       </Link>
       <nav className='flex items-center gap-5 font-semibold text-lg text-gray-700 '>
         <Link
