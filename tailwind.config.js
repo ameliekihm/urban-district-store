@@ -10,6 +10,9 @@ module.exports = {
       fontFamily: {
         barlow: ['"Barlow Condensed"', 'sans-serif'],
       },
+      backgroundImage: {
+        banner: `url('../public/images/banner.jpg')`,
+      },
     },
   },
   plugins: [],

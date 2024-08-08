@@ -13,15 +13,15 @@ export default function Products() {
     queryFn: getProducts,
   });
   return (
-    <>
+    <div className='flex justify-center'>
       {isLoading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <ul>
+      <ul className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4'>
         {products &&
           products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
       </ul>
-    </>
+    </div>
   );
 }
