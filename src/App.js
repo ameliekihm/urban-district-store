@@ -10,6 +10,9 @@ function App() {
       <AuthContextProvider>
         <Navbar />
         <Outlet />
+        <p className='flex justify-center py-4'>
+          © 2024 Kaylee All Rights Reserved
+        </p>
       </AuthContextProvider>
     </QueryClientProvider>
   );
