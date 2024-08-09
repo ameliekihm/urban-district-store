@@ -69,7 +69,7 @@ export default function ProductDetail() {
               ))}
             </select>
           </div>
-          <Button text='Add to Cart' onClick={handleClick} />
+          <Button text='Add to Bag' onClick={handleClick} />
 
           <section className='mt-8 hidden lg:block'>
             <h3 className='text-2xl font-bold py-2 text-center '>
