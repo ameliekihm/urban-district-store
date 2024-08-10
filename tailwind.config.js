@@ -10,6 +10,7 @@ module.exports = {
       fontFamily: {
         barlow: ['"Barlow Condensed"', 'sans-serif'],
         stix: ['"STIX Two Text"', 'serif'],
+        josefin: ['"Josefin Sans"', 'serif'],
       },
       backgroundImage: {
         banner: `url('../public/images/banner.jpg')`,

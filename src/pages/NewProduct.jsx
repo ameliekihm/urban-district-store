@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../components/ui/Button';
 import { uploadImage } from '../api/uploader';
 import { addNewProduct } from '../api/firebase';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -9,6 +10,17 @@ export default function NewProduct() {
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const addProduct = useMutation({
+    mutationFn: ({ product, url }) => addNewProduct(product, url),
+    onSuccess: async () =>
+      await queryClient.invalidateQueries({
+        queryKey: ['products'],
+      }),
+  });
+  //
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'file') {
@@ -22,21 +34,26 @@ export default function NewProduct() {
     setIsUploading(true);
     uploadImage(file)
       .then((url) => {
-        addNewProduct(product, url).then(() => {
-          setSuccess('Product has been successfully added.');
-          setShowPopup(true);
-          setTimeout(() => {
-            setShowPopup(false);
-            setSuccess(null);
-          }, 4000);
-        });
+        addProduct.mutate(
+          { product, url },
+          {
+            onSuccess: () => {
+              setSuccess('Product has been successfully added.');
+              setShowPopup(true);
+              setTimeout(() => {
+                setShowPopup(false);
+                setSuccess(null);
+              }, 4000);
+            },
+          }
+        );
       })
       .finally(() => setIsUploading(false));
   };
 
   return (
-    <section className='w-full text-center'>
-      <h2 className='text-2xl font-semibold my-4 py-4 bg-pink-100'>
+    <section className='px-8  text-center'>
+      <h2 className='text-3xl font-bold mb-4 py-6 bg-pink-100'>
         Add New Product
       </h2>
       {showPopup && (
@@ -53,7 +70,7 @@ export default function NewProduct() {
           alt='local file'
         />
       )}
-      <form className='flex flex-col px-12' onSubmit={handleSubmit}>
+      <form className='flex px-10 flex-col' onSubmit={handleSubmit}>
         <input
           type='file'
           accept='image/*'
@@ -104,6 +121,7 @@ export default function NewProduct() {
         <Button
           text={isUploading ? 'Uploading...' : 'Add Product'}
           disabled={isUploading}
+          className='tracking-wider font-semibold py-4'
         />
       </form>
     </section>
