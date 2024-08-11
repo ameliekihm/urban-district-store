@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from '../components/ui/Button';
-import { useAuthContext } from '../context/AuthContext';
-import { addOrUpdateCart } from '../api/firebase';
+import useCart from '../hooks/useCart';
 
 export default function ProductDetail() {
-  const { uid } = useAuthContext();
+  const { addOrUpdateItem } = useCart();
   const {
     state: {
       product: { id, image, title, description, price, options },
     },
   } = useLocation();
+  const [success, setSuccess] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
   const optionsArray =
     typeof options === 'string' ? options.split(',') : options;
 
@@ -19,7 +20,16 @@ export default function ProductDetail() {
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = (e) => {
     const product = { id, image, title, price, option: selected, quantity: 1 };
-    addOrUpdateCart(uid, product);
+    addOrUpdateItem.mutate(product, {
+      onSuccess: () => {
+        setSuccess('Item has been added to the cart.');
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false);
+          setSuccess(null);
+        }, 2000);
+      },
+    });
   };
 
   const reviews = [
@@ -69,6 +79,13 @@ export default function ProductDetail() {
               ))}
             </select>
           </div>
+          {showPopup && (
+            <div className='fixed inset-0 flex items-center justify-center z-50'>
+              <div className='bg-pink-400 p-4 rounded shadow-lg text-xl font-bold text-white'>
+                <p>🤍 {success}</p>
+              </div>
+            </div>
+          )}
           <Button text='Add to Bag' onClick={handleClick} />
 
           <section className='mt-8 hidden lg:block'>

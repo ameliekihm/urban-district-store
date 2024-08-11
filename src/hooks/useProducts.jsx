@@ -16,5 +16,6 @@ export default function useProducts() {
         queryKey: ['products'],
       }),
   });
+
   return { productsQuery, addProduct };
 }

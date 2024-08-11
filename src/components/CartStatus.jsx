@@ -1,15 +1,12 @@
 import React from 'react';
 import { HiOutlineShoppingBag } from 'react-icons/hi2';
-import { useQuery } from '@tanstack/react-query';
-import { getCart } from '../api/firebase';
-import { useAuthContext } from '../context/AuthContext';
+import useCart from '../hooks/useCart';
 
 export default function CartStatus() {
-  const { uid } = useAuthContext();
-  const { data: products } = useQuery({
-    queryKey: ['carts'],
-    queryFn: () => getCart(uid),
-  });
+  const {
+    cartQuery: { data: products },
+  } = useCart();
+
   return (
     <div className='relative'>
       <HiOutlineShoppingBag className='text-3xl mr-2' />

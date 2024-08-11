@@ -1,7 +1,4 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getCart } from '../api/firebase';
-import { useAuthContext } from '../context/AuthContext';
 import CartItem from '../components/CartItem';
 import PriceCard from '../components/PriceCard';
 import { FaPlus } from 'react-icons/fa';
@@ -9,15 +6,16 @@ import { FaEquals } from 'react-icons/fa';
 import Button from '../components/ui/Button';
 import { PiHeartbeatBold } from 'react-icons/pi';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
+import useCart from '../hooks/useCart';
 
 const SHIPPING = 7;
 
 export default function MyCart() {
-  const { uid } = useAuthContext();
-  const { isLoading, data: products } = useQuery({
-    queryKey: ['carts'],
-    queryFn: () => getCart(uid),
-  });
+  //
+  const {
+    cartQuery: { isLoading, data: products },
+  } = useCart();
+  //
   if (isLoading) return <p>Loading...</p>;
 
   const hasProducts = products && products.length > 0;
@@ -50,7 +48,7 @@ export default function MyCart() {
           <ul className=' border-gray-200 py-4 px-8'>
             {products &&
               products.map((product) => (
-                <CartItem key={product.id} product={product} uid={uid} />
+                <CartItem key={product.id} product={product} />
               ))}
           </ul>
           <div className='rounded-s-sm shadow-lg flex flex-col bg-slate-100 pt-5'>
