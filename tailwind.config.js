@@ -14,6 +14,7 @@ module.exports = {
       },
       backgroundImage: {
         banner: `url('../public/images/banner.jpg')`,
+        emptyCart: `url('../public/images/emptyCart.png')`,
       },
     },
   },

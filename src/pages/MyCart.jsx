@@ -8,6 +8,7 @@ import { FaPlus } from 'react-icons/fa';
 import { FaEquals } from 'react-icons/fa';
 import Button from '../components/ui/Button';
 import { PiHeartbeatBold } from 'react-icons/pi';
+import { HiOutlineEmojiSad } from 'react-icons/hi';
 
 const SHIPPING = 7;
 
@@ -32,10 +33,18 @@ export default function MyCart() {
         Shopping Bag
       </p>
       {!hasProducts && (
-        <p className='text-center py-6 text-red-500 text-lg'>
-          Your Shopping Bag Is Empty.
-        </p>
+        <section className='relative h-80'>
+          <div className='absolute inset-0 bg-white bg-opacity-50' />
+          <div className='w-full h-full bg-contain bg-center bg-no-repeat bg-emptyCart' />
+          <div className='flex justify-center items-center relative -top-8 drop-shadow-2xl mt-2 '>
+            <p className=' text-rose-400 text-2xl '>
+              Your Shopping Bag Is Empty.
+            </p>
+            <HiOutlineEmojiSad className='ml-1 text-2xl text-rose-400 relative top-0.5' />
+          </div>
+        </section>
       )}
+
       {hasProducts && (
         <>
           <ul className=' border-gray-200 py-4 px-8'>
