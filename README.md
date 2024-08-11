@@ -1,70 +1,138 @@
-# Getting Started with Create React App
+# Urban District Store 💟
+<p align="center">
+<img width="766" alt="Screenshot 2024-08-10 at 9 15 15 PM" src="https://github.com/user-attachments/assets/93bccf76-d213-40c2-939b-02cbed2748af">
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+###### 1. Product Details Page
+<p align="center">
+<img width="766" alt="Screenshot 2024-08-10 at 9 10 30 PM" src="https://github.com/user-attachments/assets/3ebde770-8258-4e76-b5f6-dc94bcd7cdf6">
+</p>
 
-In the project directory, you can run:
 
-### `yarn start`
+###### 2. Shopping Bag Page
+<p align="center">
+<img width="766" alt="Screenshot 2024-08-10 at 9 11 45 PM" src="https://github.com/user-attachments/assets/d5a15c8f-33a6-42b7-8410-8955d21670a1">
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+###### 3. Add New Product Page for Admin Account
+<p align="center">
+<img width="766" alt="Screenshot 2024-08-10 at 9 09 46 PM" src="https://github.com/user-attachments/assets/66f49f95-ddb3-446e-9a84-c997b0d103a1">
+</p>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `yarn test`
+Click here to view the live project deployed on Netlify. ➡️ https://urban-district.netlify.app/
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Description
 
-### `yarn build`
+Welcome to Urban District, a responsive shopping mall web application designed to provide users with a seamless shopping experience. Built with React and Tailwind CSS, this application features a dynamic product catalog, a user-friendly shopping bag, and smooth user authentication through Firebase.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **User Authentication**: Secure login and logout using Google accounts via Firebase Authentication.
+-  **Responsive Design**: The website is fully responsive and adjusts to different screen sizes for optimal viewing.
+- **Admin Functionality**: Admin users have access to add new products to the store.
+- **Protected Shopping Cart**: The shopping cart is only accessible to logged-in users, ensuring that user-specific data remains secure.
+- **Product Catalog**: Browse a wide range of products with detailed descriptions, prices, and images.
+- **Product Detail Page**: View detailed information about each product, including size options and customer reviews.
+- **Shopping Bag**: Add products to the cart, adjust quantities, and see real-time updates.
+- **Order Summary**: View a summary of your cart, including subtotal, shipping costs, and the total amount.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+## Technologies Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **React**: A powerful JavaScript library for building user interfaces.
+- **Tailwind CSS**: A utility-first CSS framework for creating responsive designs.
+- **React Router**: For handling navigation and routing.
+- **React Query**: For efficient data fetching and caching.
+- **Firebase**: For user authentication and real-time database management.
+- **Cloudinary**: For uploading and managing product images.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Components
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 1. Navbar
 
-## Learn More
+The `Navbar` component provides navigation across the application, including links to the product catalog, cart, and user profile.
+ 
+### 2. Banner
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The `Banner`component displays a prominent banner on the homepage.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. User
 
-### Code Splitting
+The `User` component displays the user's profile information.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 4. Products
 
-### Analyzing the Bundle Size
+The `Products` component lists all the products available in the store.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 5. ProductCard
 
-### Making a Progressive Web App
+The `ProductCard` component represents an individual product in the product list. It displays the product image, title, category, and price. Clicking on the product navigates to the product detail page.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 6. CartItem
 
-### Advanced Configuration
+The `CartItem` component represents an individual item in the shopping cart, allowing users to adjust quantities or remove the item.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 7. CartStatus
 
-### Deployment
+The `CartStatus` component shows the number of items currently in the shopping cart, displayed as a badge on the shopping cart icon.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 8. PriceCard
 
-### `yarn build` fails to minify
+The `PriceCard` component displays the price details, including the subtotal, shipping costs, and total amount in the order summary.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Context
+
+### AuthContext
+
+The `AuthContext` handles user authentication status across the application, ensuring that user data is accessible and consistent.
+
+
+## Hooks
+
+### 1. useCart
+
+The `useCart` hook provides an interface for managing the shopping cart, including adding, updating, and removing items.
+
+### 2. useProducts
+
+The `useProducts` hook provides an interface for fetching product data and managing product-related mutations.
+
+
+## Pages
+
+### 1. AllProducts
+
+The `AllProducts` page displays all available products in the store.
+ 
+### 2. Home
+
+The `Home` page serves as the landing page for the application, featuring the main banner and featured products.
+
+### 3. MyCart
+
+The `MyCart` page displays the user's shopping cart with the ability to modify product quantities and proceed to checkout. This page is protected and only accessible to logged-in users.
+
+### 4. NewProduct
+
+The `NewProduct` page allows authorized admin users to add new products to the store.
+
+### 5. ProductDetail
+
+The `ProductDetail` page provides detailed information about a selected product, including size options, customer reviews, and the ability to add the product to the shopping cart.
+
+### 6. ProtectedRoute
+
+The `ProtectedRoute` component restricts access to certain pages based on the user's authentication status.
+
+
+## Styling
+
+The application uses `Tailwind CSS` for styling. Tailwind CSS allows for easy and efficient styling by applying utility classes directly in the JSX code. The application supports a responsive design, adjusting to various screen sizes for an optimal user experience.
+
+
+
+
