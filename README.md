@@ -32,11 +32,11 @@ Welcome to Urban District, a responsive shopping mall web application designed t
 - **User Authentication**: Secure login and logout using Google accounts via Firebase Authentication.
 -  **Responsive Design**: The website is fully responsive and adjusts to different screen sizes for optimal viewing.
 - **Admin Functionality**: Admin users have access to add new products to the store.
-- **Protected Shopping Cart**: The shopping cart is only accessible to logged-in users, ensuring that user-specific data remains secure.
+- **Protected Shopping Bag**: The shopping bag is only accessible to logged-in users, ensuring that user-specific data remains secure.
 - **Product Catalog**: Browse a wide range of products with detailed descriptions, prices, and images.
 - **Product Detail Page**: View detailed information about each product, including size options and customer reviews.
-- **Shopping Bag**: Add products to the cart, adjust quantities, and see real-time updates.
-- **Order Summary**: View a summary of your cart, including subtotal, shipping costs, and the total amount.
+- **Shopping Bag**: Add products to the shopping bag, adjust quantities, and see real-time updates.
+- **Order Summary**: View a summary of your shopping bag, including subtotal, shipping costs, and the total amount.
 
 
 ## Technologies Used
@@ -53,11 +53,11 @@ Welcome to Urban District, a responsive shopping mall web application designed t
 
 ### 1. Navbar
 
-The `Navbar` component provides navigation across the application, including links to the product catalog, cart, and user profile.
+The `Navbar` component provides navigation across the application, including links to the product catalog, shopping bag, and user profile.
  
 ### 2. Banner
 
-The `Banner`component displays a prominent banner on the homepage.
+The `Banner` component displays a prominent banner on the homepage.
 
 ### 3. User
 
@@ -73,11 +73,11 @@ The `ProductCard` component represents an individual product in the product list
 
 ### 6. CartItem
 
-The `CartItem` component represents an individual item in the shopping cart, allowing users to adjust quantities or remove the item.
+The `CartItem` component represents an individual item in the shopping bag, allowing users to adjust quantities or remove the item.
 
 ### 7. CartStatus
 
-The `CartStatus` component shows the number of items currently in the shopping cart, displayed as a badge on the shopping cart icon.
+The `CartStatus` component shows the number of items currently in the shopping bag, displayed as a badge on the shopping bag icon.
 
 ### 8. PriceCard
 
@@ -95,7 +95,7 @@ The `AuthContext` handles user authentication status across the application, ens
 
 ### 1. useCart
 
-The `useCart` hook provides an interface for managing the shopping cart, including adding, updating, and removing items.
+The `useCart` hook provides an interface for managing the shopping bag, including adding, updating, and removing items.
 
 ### 2. useProducts
 
@@ -114,7 +114,7 @@ The `Home` page serves as the landing page for the application, featuring the ma
 
 ### 3. MyCart
 
-The `MyCart` page displays the user's shopping cart with the ability to modify product quantities and proceed to checkout. This page is protected and only accessible to logged-in users.
+The `MyCart` page displays the user's shopping bag with the ability to modify product quantities and proceed to checkout. This page is protected and only accessible to logged-in users.
 
 ### 4. NewProduct
 
@@ -122,7 +122,7 @@ The `NewProduct` page allows authorized admin users to add new products to the s
 
 ### 5. ProductDetail
 
-The `ProductDetail` page provides detailed information about a selected product, including size options, customer reviews, and the ability to add the product to the shopping cart.
+The `ProductDetail` page provides detailed information about a selected product, including size options, customer reviews, and the ability to add the product to the shopping bag.
 
 ### 6. ProtectedRoute
 
