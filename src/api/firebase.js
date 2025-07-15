@@ -1,3 +1,4 @@
+console.log('✅ DB URL:', process.env.REACT_APP_FIREBASE_DB_URL);
 import { initializeApp } from 'firebase/app';
 import { v4 as uuid } from 'uuid';
 import {
