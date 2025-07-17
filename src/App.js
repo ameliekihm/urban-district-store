@@ -14,7 +14,7 @@ function App() {
         <div className='flex justify-center items-center py-4 '>
           <AiOutlineCopyright className='mr-1 relative top-[-1px]' />
           <p className='font-stix'>
-            2024 Urban District - Kaylee All Rights Reserved
+            2024 Urban District - Amelie All Rights Reserved
           </p>
         </div>
       </AuthContextProvider>
