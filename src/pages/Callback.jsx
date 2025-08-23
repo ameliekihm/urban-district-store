@@ -1,18 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuthContext } from '../context/AuthContext';
 
 const Callback = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuthContext();
 
   useEffect(() => {
     const fetchToken = async () => {
       const code = new URLSearchParams(window.location.search).get('code');
-
-      if (!code) {
-        console.error('Authorization code not found');
-        return;
-      }
+      if (!code) return;
 
       try {
         const res = await axios.post(
@@ -21,7 +19,7 @@ const Callback = () => {
             grant_type: 'authorization_code',
             client_id: process.env.REACT_APP_COGNITO_CLIENT_ID,
             code,
-            redirect_uri: process.env.REACT_APP_COGNITO_REDIRECT_URI,
+            redirect_uri: process.env.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI,
           }),
           {
             headers: {
@@ -31,20 +29,29 @@ const Callback = () => {
         );
 
         const { id_token, access_token } = res.data;
-
         localStorage.setItem('id_token', id_token);
         localStorage.setItem('access_token', access_token);
-
+        const userData = parseJwt(id_token);
+        setUser(userData);
         navigate('/');
-      } catch (err) {
-        console.error('Token request failed:', err);
+      } catch {
+        console.error('Token request failed');
       }
     };
 
     fetchToken();
-  }, [navigate]);
+  }, [navigate, setUser]);
 
   return <p>Logging in...</p>;
 };
+
+function parseJwt(token) {
+  try {
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+  } catch {
+    return null;
+  }
+}
 
 export default Callback;

@@ -1,15 +1,13 @@
 import { v4 as uuid } from 'uuid';
 import { jwtDecode } from 'jwt-decode';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getDatabase, ref, get, set, remove } from 'firebase/database';
 
 const firebaseConfig = {
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
 };
 
-console.log('✅ DB URL:', firebaseConfig.databaseURL);
-
-const app = initializeApp(firebaseConfig);
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const database = getDatabase(app);
 
 export function onUserStateChange(callback) {
@@ -34,7 +32,7 @@ async function adminUser(user) {
   return get(ref(database, 'admins')).then((snapshot) => {
     if (snapshot.exists()) {
       const admins = snapshot.val();
-      const isAdmin = admins.includes(user.uid);
+      const isAdmin = Object.values(admins).includes(user.email);
       return { ...user, isAdmin };
     }
     return user;
