@@ -16,12 +16,12 @@ const Callback = () => {
 
       try {
         const res = await axios.post(
-          'https://us-east-16o6di1fuy.auth.us-east-1.amazoncognito.com/oauth2/token',
+          `${process.env.REACT_APP_COGNITO_DOMAIN}/oauth2/token`,
           new URLSearchParams({
             grant_type: 'authorization_code',
-            client_id: '108fhmcck04sg5bnmq16a4t88o',
+            client_id: process.env.REACT_APP_COGNITO_CLIENT_ID,
             code,
-            redirect_uri: 'http://localhost:3000/',
+            redirect_uri: process.env.REACT_APP_COGNITO_REDIRECT_URI,
           }),
           {
             headers: {

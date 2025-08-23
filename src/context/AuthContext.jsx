@@ -17,20 +17,28 @@ export function AuthContextProvider({ children }) {
   }, []);
 
   const login = () => {
-    const domain =
-      'https://us-east-16o6di1fuy.auth.us-east-1.amazoncognito.com';
-    const clientId = '108fhmcck04sg5bnmq16a4t88o';
-    const redirectUri = 'http://localhost:3000/';
+    const domain = process.env.REACT_APP_COGNITO_DOMAIN;
+    const clientId = process.env.REACT_APP_COGNITO_CLIENT_ID;
+    const redirectUri = process.env.REACT_APP_COGNITO_REDIRECT_URI;
     const responseType = 'code';
 
-    const loginUrl = `${domain}/oauth2/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&identity_provider=Google`;
+    const loginUrl = `${domain}/oauth2/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}&identity_provider=Google&prompt=select_account`;
+
     window.location.href = loginUrl;
   };
 
   const logout = () => {
+    const domain = process.env.REACT_APP_COGNITO_DOMAIN;
+    const clientId = process.env.REACT_APP_COGNITO_CLIENT_ID;
+
+    const logoutUrl = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
+      'http://localhost:3000/'
+    )}`;
+
     localStorage.removeItem('id_token');
     localStorage.removeItem('access_token');
-    const logoutUrl = `https://us-east-16o6di1fuy.auth.us-east-1.amazoncognito.com/logout?client_id=108fhmcck04sg5bnmq16a4t88o&logout_uri=http://localhost:3000/`;
     window.location.href = logoutUrl;
   };
 
