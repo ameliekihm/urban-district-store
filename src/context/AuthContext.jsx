@@ -1,20 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getDatabase, ref, get } from 'firebase/database';
-import { initializeApp } from 'firebase/app';
-
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
 const AuthContext = createContext();
 
@@ -30,15 +15,10 @@ export function AuthContextProvider({ children }) {
     }
   }, []);
 
-  const checkAdmin = async (userData) => {
-    try {
-      const snapshot = await get(ref(db, 'admins'));
-      const admins = snapshot.exists() ? snapshot.val() : {};
-      const isAdmin = Object.values(admins).includes(userData.email);
-      setUser({ ...userData, isAdmin });
-    } catch {
-      setUser(userData);
-    }
+  const checkAdmin = (userData) => {
+    const groups = userData.groups || [];
+    const isAdmin = groups.includes('Admins');
+    setUser({ ...userData, isAdmin });
   };
 
   const login = () => {
@@ -88,6 +68,7 @@ function parseJwt(token) {
       name: payload.name,
       picture: payload.picture,
       email: payload.email,
+      groups: payload['cognito:groups'] || [],
     };
   } catch {
     return null;

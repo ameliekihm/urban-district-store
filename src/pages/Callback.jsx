@@ -8,7 +8,7 @@ const Callback = () => {
   const { setUser } = useAuthContext();
 
   useEffect(() => {
-    const fetchToken = async () => {
+    const fetchTokenAndProfile = async () => {
       const code = new URLSearchParams(window.location.search).get('code');
       if (!code) return;
 
@@ -34,15 +34,23 @@ const Callback = () => {
         localStorage.setItem('access_token', access_token);
 
         const userData = parseJwt(id_token);
-        setUser(userData);
+
+        setUser({
+          ...userData,
+          name: userData.name,
+          picture: userData.picture,
+          email: userData.email,
+          groups: userData['cognito:groups'] || [],
+          isAdmin: (userData['cognito:groups'] || []).includes('Admins'),
+        });
 
         navigate('/');
       } catch (error) {
-        console.error('Token fetch failed:', error);
+        console.error('Token or profile fetch failed:', error);
       }
     };
 
-    fetchToken();
+    fetchTokenAndProfile();
   }, [navigate, setUser]);
 
   return <p>Logging in...</p>;
