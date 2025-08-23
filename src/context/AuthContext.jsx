@@ -56,7 +56,6 @@ export function AuthContextProvider({ children }) {
   const logout = () => {
     const domain = process.env.REACT_APP_COGNITO_DOMAIN;
     const clientId = process.env.REACT_APP_COGNITO_CLIENT_ID;
-
     const logoutUrl = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
       process.env.REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI
     )}`;
@@ -64,7 +63,6 @@ export function AuthContextProvider({ children }) {
     localStorage.removeItem('id_token');
     localStorage.removeItem('access_token');
     setUser(null);
-
     window.location.href = logoutUrl;
   };
 
@@ -84,7 +82,13 @@ export function useAuthContext() {
 function parseJwt(token) {
   try {
     const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-    return JSON.parse(window.atob(base64));
+    const payload = JSON.parse(window.atob(base64));
+    return {
+      ...payload,
+      name: payload.name,
+      picture: payload.picture,
+      email: payload.email,
+    };
   } catch {
     return null;
   }

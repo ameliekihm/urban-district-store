@@ -13,6 +13,7 @@ const Callback = () => {
       if (!code) return;
 
       try {
+        // 1. 토큰 요청
         const res = await axios.post(
           `${process.env.REACT_APP_COGNITO_DOMAIN}/oauth2/token`,
           new URLSearchParams({
@@ -29,13 +30,18 @@ const Callback = () => {
         );
 
         const { id_token, access_token } = res.data;
+
+        // 2. 토큰 저장
         localStorage.setItem('id_token', id_token);
         localStorage.setItem('access_token', access_token);
+
+        // 3. id_token에서 사용자 정보 파싱
         const userData = parseJwt(id_token);
         setUser(userData);
+
         navigate('/');
-      } catch {
-        console.error('Token request failed');
+      } catch (error) {
+        console.error('Token fetch failed:', error);
       }
     };
 
@@ -45,6 +51,7 @@ const Callback = () => {
   return <p>Logging in...</p>;
 };
 
+// JWT 디코딩 함수
 function parseJwt(token) {
   try {
     const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');

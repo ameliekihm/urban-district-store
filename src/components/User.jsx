@@ -1,17 +1,14 @@
 import React from 'react';
 
-export default function User({ user: { photoURL, displayName } }) {
+export default function User({ user }) {
   return (
-    <div className='flex items-center shrink-0 transition-all duration-300 hover:scale-110'>
+    <div className='flex items-center gap-2'>
       <img
-        className='w-10 h-10 rounded-full mr-1'
-        src={photoURL}
-        alt={displayName}
+        src={user.picture}
+        alt={user.name}
+        className='w-8 h-8 rounded-full'
       />
-
-      <span className='hidden md:block text-black border-b-2 border-brand'>
-        {displayName}
-      </span>
+      <span className='font-semibold'>{user.name}</span>
     </div>
   );
 }
