@@ -44,21 +44,19 @@ export default function Navbar() {
           </Link>
         )}
 
-        {user ? (
-          <div className='flex items-center gap-3'>
-            {user.picture && (
-              <img
-                src={user.picture}
-                alt='Profile'
-                className='w-9 h-9 rounded-full border'
-              />
-            )}
-            <span className='text-gray-700'>{user.name}</span>
-            <Button text='Logout' onClick={logout} />
+        {user && (
+          <div className='flex items-center gap-2'>
+            <img
+              src={user.picture}
+              alt={user.name}
+              className='w-8 h-8 rounded-full border'
+            />
+            <span className='text-gray-800'>{user.name}</span>
           </div>
-        ) : (
-          <Button text='Login' onClick={login} />
         )}
+
+        {!user && <Button text={'Login'} onClick={login} />}
+        {user && <Button text={'Logout'} onClick={logout} />}
       </nav>
     </header>
   );

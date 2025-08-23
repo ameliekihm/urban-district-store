@@ -29,13 +29,16 @@ const Callback = () => {
         );
 
         const { id_token, access_token } = res.data;
+
         localStorage.setItem('id_token', id_token);
         localStorage.setItem('access_token', access_token);
+
         const userData = parseJwt(id_token);
         setUser(userData);
+
         navigate('/');
-      } catch {
-        console.error('Token request failed');
+      } catch (error) {
+        console.error('Token fetch failed:', error);
       }
     };
 
