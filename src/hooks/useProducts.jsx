@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import { getProducts as fetchProducts, addNewProduct } from '../api/firebase';
+import { getProducts as fetchProducts, addNewProduct } from '../api/dynamo';
 
 export default function useProducts() {
   const queryClient = useQueryClient();

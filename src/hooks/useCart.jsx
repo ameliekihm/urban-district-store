@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import { addOrUpdateCart, getCart, removeFromCart } from '../api/firebase';
+import { addOrUpdateCart, getCart, removeFromCart } from '../api/dynamo';
 import { useAuthContext } from '../context/AuthContext';
 
 export default function useCart() {
