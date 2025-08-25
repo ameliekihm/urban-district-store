@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../components/ui/Button';
-import { uploadImage } from '../api/uploader';
 import useProducts from '../hooks/useProducts';
+import { getUploadUrl, uploadToS3 } from '../api/s3';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -17,35 +17,50 @@ export default function NewProduct() {
       setFile(files && files[0]);
       return;
     }
-    setProduct((product) => ({ ...product, [name]: value }));
+    setProduct((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsUploading(true);
-    uploadImage(file)
-      .then((url) => {
-        addProduct.mutate(
-          { product, url },
-          {
-            onSuccess: () => {
-              setSuccess('Product has been successfully added.');
-              setShowPopup(true);
-              setTimeout(() => {
-                setShowPopup(false);
-                setSuccess(null);
-              }, 2000);
-            },
-          }
-        );
-      })
-      .finally(() => setIsUploading(false));
+    if (!file) {
+      alert('Please select an image file');
+      return;
+    }
+
+    try {
+      setIsUploading(true);
+      const { uploadUrl } = await getUploadUrl(file.name, file.type);
+      const imageUrl = await uploadToS3(uploadUrl, file);
+
+      addProduct.mutate(
+        { product, url: imageUrl },
+        {
+          onSuccess: () => {
+            setSuccess('Product has been successfully added.');
+            setShowPopup(true);
+            setTimeout(() => {
+              setShowPopup(false);
+              setSuccess(null);
+              setProduct({});
+              setFile(null);
+            }, 2000);
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Upload failed:', error);
+      alert('Failed to upload product. Please try again.');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
-    <section className='px-8  text-center'>
+    <section className='px-8 text-center'>
       <h2 className='text-3xl font-bold mb-4 py-6 bg-pink-100'>
         Add New Product
       </h2>
+
       {showPopup && (
         <div className='fixed inset-0 flex items-center justify-center z-50'>
           <div className='bg-pink-400 p-4 rounded shadow-lg text-xl font-bold text-white'>
@@ -53,13 +68,15 @@ export default function NewProduct() {
           </div>
         </div>
       )}
+
       {file && (
         <img
           className='w-80 mx-auto mb-2'
           src={URL.createObjectURL(file)}
-          alt='local file'
+          alt='preview'
         />
       )}
+
       <form className='flex px-10 flex-col' onSubmit={handleSubmit}>
         <input
           type='file'

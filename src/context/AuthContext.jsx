@@ -4,16 +4,55 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const idToken = localStorage.getItem('id_token');
-    if (idToken) {
+    const accessToken = localStorage.getItem('access_token');
+
+    if (idToken && accessToken) {
       const userData = parseJwt(idToken);
-      checkAdmin(userData);
+
+      if (isTokenExpired(idToken)) {
+        handleTokenExpired();
+      } else {
+        fetchUserInfo(accessToken).then((info) => {
+          if (info) {
+            const mergedUser = {
+              ...userData,
+              email: info.email,
+              name: info.name,
+              picture: info.picture,
+            };
+            checkAdmin(mergedUser);
+          } else {
+            checkAdmin(userData);
+          }
+        });
+      }
+    } else {
+      setUser(null);
     }
   }, []);
+
+  const fetchUserInfo = async (accessToken) => {
+    try {
+      const domain = process.env.REACT_APP_COGNITO_DOMAIN;
+      const res = await fetch(`${domain}/oauth2/userInfo`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  };
+
+  const handleTokenExpired = () => {
+    alert('Your session has expired. Please log in again.');
+    logout();
+  };
 
   const checkAdmin = (userData) => {
     const groups = userData.groups || [];
@@ -72,5 +111,15 @@ function parseJwt(token) {
     };
   } catch {
     return null;
+  }
+}
+
+function isTokenExpired(token) {
+  try {
+    const decoded = parseJwt(token);
+    if (!decoded || !decoded.exp) return true;
+    return decoded.exp * 1000 < Date.now();
+  } catch {
+    return true;
   }
 }

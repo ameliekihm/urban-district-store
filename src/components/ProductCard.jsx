@@ -11,15 +11,19 @@ export default function ProductCard({
       onClick={() => {
         navigate(`/products/${id}`, { state: { product } });
       }}
-      className='rounded-s-sm shadow-sm overflow-hidden 
-    cursor-pointer w-50 transition-all hover:scale-105'
+      className='
+        rounded-sm shadow-md overflow-hidden cursor-pointer
+        transition-all hover:scale-105 bg-white
+      '
     >
-      <img className='w-full' src={image} alt={title} />
-      <div className='mt-2 px-2 text-md items-center'>
+      <div className='w-full h-[350px] overflow-hidden'>
+        <img className='w-full h-full object-cover' src={image} alt={title} />
+      </div>
+      <div className='mt-2 px-3 text-md items-center'>
         <h3 className='font-semibold'>{title}</h3>
         <p>{`US $${price}.00`}</p>
       </div>
-      <p className='mb-2 px-2 text-gray-500'>{category}</p>
+      <p className='mb-3 px-3 text-gray-500'>{category}</p>
     </li>
   );
 }
