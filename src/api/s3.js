@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export async function getUploadUrl(fileName, fileType) {
-  const response = await fetch(process.env.REACT_APP_LAMBDA_UPLOAD_URL, {
+  const response = await fetch(window.env.REACT_APP_LAMBDA_UPLOAD_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fileName, fileType }),

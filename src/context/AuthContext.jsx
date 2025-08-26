@@ -38,7 +38,7 @@ export function AuthContextProvider({ children }) {
 
   const fetchUserInfo = async (accessToken) => {
     try {
-      const domain = process.env.REACT_APP_COGNITO_DOMAIN;
+      const domain = window.env.REACT_APP_COGNITO_DOMAIN;
       const res = await fetch(`${domain}/oauth2/userInfo`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -61,9 +61,9 @@ export function AuthContextProvider({ children }) {
   };
 
   const login = () => {
-    const domain = process.env.REACT_APP_COGNITO_DOMAIN;
-    const clientId = process.env.REACT_APP_COGNITO_CLIENT_ID;
-    const redirectUri = process.env.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI;
+    const domain = window.env.REACT_APP_COGNITO_DOMAIN;
+    const clientId = window.env.REACT_APP_COGNITO_CLIENT_ID;
+    const redirectUri = window.env.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI;
     const responseType = 'code';
     const scope = encodeURIComponent('openid email profile');
     const loginUrl = `${domain}/oauth2/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${encodeURIComponent(
@@ -73,10 +73,10 @@ export function AuthContextProvider({ children }) {
   };
 
   const logout = () => {
-    const domain = process.env.REACT_APP_COGNITO_DOMAIN;
-    const clientId = process.env.REACT_APP_COGNITO_CLIENT_ID;
+    const domain = window.env.REACT_APP_COGNITO_DOMAIN;
+    const clientId = window.env.REACT_APP_COGNITO_CLIENT_ID;
     const logoutUrl = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
-      process.env.REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI
+      window.env.REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI
     )}`;
 
     localStorage.removeItem('id_token');

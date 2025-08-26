@@ -10,12 +10,12 @@ import {
   DeleteCommand,
 } from '@aws-sdk/lib-dynamodb';
 
-const REGION = process.env.REACT_APP_AWS_REGION;
-const IDENTITY_POOL_ID = process.env.REACT_APP_COGNITO_IDENTITY_POOL_ID;
-const USER_POOL_ID = process.env.REACT_APP_COGNITO_USER_POOL_ID;
+const REGION = window.env.REACT_APP_AWS_REGION;
+const IDENTITY_POOL_ID = window.env.REACT_APP_COGNITO_IDENTITY_POOL_ID;
+const USER_POOL_ID = window.env.REACT_APP_COGNITO_USER_POOL_ID;
 
-const PRODUCTS_TABLE = process.env.REACT_APP_DDB_PRODUCTS_TABLE;
-const CARTS_TABLE = process.env.REACT_APP_DDB_CARTS_TABLE;
+const PRODUCTS_TABLE = window.env.REACT_APP_DDB_PRODUCTS_TABLE;
+const CARTS_TABLE = window.env.REACT_APP_DDB_CARTS_TABLE;
 
 let cachedIdToken = null;
 let ddbDoc = null;

@@ -27,6 +27,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@aws-sdk/client-dynamodb", "npm:3.873.0"],\
+          ["@aws-sdk/client-ssm", "npm:3.873.0"],\
           ["@aws-sdk/credential-providers", "npm:3.873.0"],\
           ["@aws-sdk/lib-dynamodb", "virtual:16e654a9d365e02f7e28ac465e17fac93840604085351a9f6343f69b3a793d34618b538eea2150d2f1f567e908e7676db665faf19a175c38c1abccd63a770793#npm:3.873.0"],\
           ["@firebase/app", "npm:0.10.8"],\
@@ -213,6 +214,57 @@ const RAW_RUNTIME_STATE =
           ["@aws-sdk/core", "npm:3.873.0"],\
           ["@aws-sdk/credential-provider-node", "npm:3.873.0"],\
           ["@aws-sdk/middleware-endpoint-discovery", "npm:3.873.0"],\
+          ["@aws-sdk/middleware-host-header", "npm:3.873.0"],\
+          ["@aws-sdk/middleware-logger", "npm:3.873.0"],\
+          ["@aws-sdk/middleware-recursion-detection", "npm:3.873.0"],\
+          ["@aws-sdk/middleware-user-agent", "npm:3.873.0"],\
+          ["@aws-sdk/region-config-resolver", "npm:3.873.0"],\
+          ["@aws-sdk/types", "npm:3.862.0"],\
+          ["@aws-sdk/util-endpoints", "npm:3.873.0"],\
+          ["@aws-sdk/util-user-agent-browser", "npm:3.873.0"],\
+          ["@aws-sdk/util-user-agent-node", "virtual:e911ac7abe853ae663704ab55491e2003d4629ed4280186989b9d19552201cac998e1c77a7bf6da7da22d5426c9ff288c026e4017b088effcd7afe9575360775#npm:3.873.0"],\
+          ["@smithy/config-resolver", "npm:4.1.5"],\
+          ["@smithy/core", "npm:3.8.0"],\
+          ["@smithy/fetch-http-handler", "npm:5.1.1"],\
+          ["@smithy/hash-node", "npm:4.0.5"],\
+          ["@smithy/invalid-dependency", "npm:4.0.5"],\
+          ["@smithy/middleware-content-length", "npm:4.0.5"],\
+          ["@smithy/middleware-endpoint", "npm:4.1.18"],\
+          ["@smithy/middleware-retry", "npm:4.1.19"],\
+          ["@smithy/middleware-serde", "npm:4.0.9"],\
+          ["@smithy/middleware-stack", "npm:4.0.5"],\
+          ["@smithy/node-config-provider", "npm:4.1.4"],\
+          ["@smithy/node-http-handler", "npm:4.1.1"],\
+          ["@smithy/protocol-http", "npm:5.1.3"],\
+          ["@smithy/smithy-client", "npm:4.4.10"],\
+          ["@smithy/types", "npm:4.3.2"],\
+          ["@smithy/url-parser", "npm:4.0.5"],\
+          ["@smithy/util-base64", "npm:4.0.0"],\
+          ["@smithy/util-body-length-browser", "npm:4.0.0"],\
+          ["@smithy/util-body-length-node", "npm:4.0.0"],\
+          ["@smithy/util-defaults-mode-browser", "npm:4.0.26"],\
+          ["@smithy/util-defaults-mode-node", "npm:4.0.26"],\
+          ["@smithy/util-endpoints", "npm:3.0.7"],\
+          ["@smithy/util-middleware", "npm:4.0.5"],\
+          ["@smithy/util-retry", "npm:4.0.7"],\
+          ["@smithy/util-utf8", "npm:4.0.0"],\
+          ["@smithy/util-waiter", "npm:4.0.7"],\
+          ["@types/uuid", "npm:9.0.8"],\
+          ["tslib", "npm:2.8.1"],\
+          ["uuid", "npm:9.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@aws-sdk/client-ssm", [\
+      ["npm:3.873.0", {\
+        "packageLocation": "../../../../.yarn/berry/cache/@aws-sdk-client-ssm-npm-3.873.0-93fe345146-10c0.zip/node_modules/@aws-sdk/client-ssm/",\
+        "packageDependencies": [\
+          ["@aws-sdk/client-ssm", "npm:3.873.0"],\
+          ["@aws-crypto/sha256-browser", "npm:5.2.0"],\
+          ["@aws-crypto/sha256-js", "npm:5.2.0"],\
+          ["@aws-sdk/core", "npm:3.873.0"],\
+          ["@aws-sdk/credential-provider-node", "npm:3.873.0"],\
           ["@aws-sdk/middleware-host-header", "npm:3.873.0"],\
           ["@aws-sdk/middleware-logger", "npm:3.873.0"],\
           ["@aws-sdk/middleware-recursion-detection", "npm:3.873.0"],\
@@ -18945,6 +18997,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["shoppy", "workspace:."],\
           ["@aws-sdk/client-dynamodb", "npm:3.873.0"],\
+          ["@aws-sdk/client-ssm", "npm:3.873.0"],\
           ["@aws-sdk/credential-providers", "npm:3.873.0"],\
           ["@aws-sdk/lib-dynamodb", "virtual:16e654a9d365e02f7e28ac465e17fac93840604085351a9f6343f69b3a793d34618b538eea2150d2f1f567e908e7676db665faf19a175c38c1abccd63a770793#npm:3.873.0"],\
           ["@firebase/app", "npm:0.10.8"],\

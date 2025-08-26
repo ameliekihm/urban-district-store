@@ -14,12 +14,12 @@ const Callback = () => {
 
       try {
         const res = await axios.post(
-          `${process.env.REACT_APP_COGNITO_DOMAIN}/oauth2/token`,
+          `${window.env.REACT_APP_COGNITO_DOMAIN}/oauth2/token`,
           new URLSearchParams({
             grant_type: 'authorization_code',
-            client_id: process.env.REACT_APP_COGNITO_CLIENT_ID,
+            client_id: window.env.REACT_APP_COGNITO_CLIENT_ID,
             code,
-            redirect_uri: process.env.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI,
+            redirect_uri: window.env.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI,
           }),
           {
             headers: {
