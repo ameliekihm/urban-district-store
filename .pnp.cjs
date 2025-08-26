@@ -39,6 +39,7 @@ const RAW_RUNTIME_STATE =
           ["firebase", "npm:10.12.5"],\
           ["jwt-decode", "npm:4.0.0"],\
           ["oidc-client-ts", "npm:3.3.0"],\
+          ["papaparse", "npm:5.5.3"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:16e654a9d365e02f7e28ac465e17fac93840604085351a9f6343f69b3a793d34618b538eea2150d2f1f567e908e7676db665faf19a175c38c1abccd63a770793#npm:18.3.1"],\
           ["react-icons", "virtual:16e654a9d365e02f7e28ac465e17fac93840604085351a9f6343f69b3a793d34618b538eea2150d2f1f567e908e7676db665faf19a175c38c1abccd63a770793#npm:5.2.1"],\
@@ -15766,6 +15767,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["papaparse", [\
+      ["npm:5.5.3", {\
+        "packageLocation": "../../../../.yarn/berry/cache/papaparse-npm-5.5.3-a5461bada4-10c0.zip/node_modules/papaparse/",\
+        "packageDependencies": [\
+          ["papaparse", "npm:5.5.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["param-case", [\
       ["npm:3.0.4", {\
         "packageLocation": "../../../../.yarn/berry/cache/param-case-npm-3.0.4-cfb242ad97-10c0.zip/node_modules/param-case/",\
@@ -19009,6 +19019,7 @@ const RAW_RUNTIME_STATE =
           ["firebase", "npm:10.12.5"],\
           ["jwt-decode", "npm:4.0.0"],\
           ["oidc-client-ts", "npm:3.3.0"],\
+          ["papaparse", "npm:5.5.3"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:16e654a9d365e02f7e28ac465e17fac93840604085351a9f6343f69b3a793d34618b538eea2150d2f1f567e908e7676db665faf19a175c38c1abccd63a770793#npm:18.3.1"],\
           ["react-icons", "virtual:16e654a9d365e02f7e28ac465e17fac93840604085351a9f6343f69b3a793d34618b538eea2150d2f1f567e908e7676db665faf19a175c38c1abccd63a770793#npm:5.2.1"],\
