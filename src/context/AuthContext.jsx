@@ -50,6 +50,8 @@ export function AuthContextProvider({ children }) {
   };
 
   const handleTokenExpired = () => {
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
     alert('Your session has expired. Please log in again.');
     logout();
   };
