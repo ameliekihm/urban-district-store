@@ -5,23 +5,27 @@ import { getUploadUrl, uploadToS3 } from '../api/s3';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+
   const { addProduct } = useProducts();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
     if (name === 'file') {
-      setFile(files && files[0]);
+      setFile(files?.[0] || null);
       return;
     }
+
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!file) {
       alert('Please select an image file');
       return;
@@ -29,11 +33,13 @@ export default function NewProduct() {
 
     try {
       setIsUploading(true);
-      const { uploadUrl } = await getUploadUrl(file.name, file.type);
+
+      const uploadUrl = await getUploadUrl(file.name, file.type);
+
       const imageUrl = await uploadToS3(uploadUrl, file);
 
       addProduct.mutate(
-        { product, url: imageUrl },
+        { ...product, image: imageUrl },
         {
           onSuccess: () => {
             setSuccess('Product has been successfully added.');
@@ -45,11 +51,14 @@ export default function NewProduct() {
               setFile(null);
             }, 2000);
           },
+          onError: () => {
+            alert('Failed to save product. Please try again.');
+          },
         }
       );
     } catch (error) {
       console.error('Upload failed:', error);
-      alert('Failed to upload product. Please try again.');
+      alert(error.message || 'Failed to upload product. Please try again.');
     } finally {
       setIsUploading(false);
     }
@@ -121,7 +130,7 @@ export default function NewProduct() {
           type='text'
           name='options'
           value={product.options ?? ''}
-          placeholder='Size options (separated by commas)'
+          placeholder='Size options (comma separated)'
           required
           onChange={handleChange}
         />

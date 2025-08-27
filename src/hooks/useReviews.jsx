@@ -17,7 +17,6 @@ export default function useReviews() {
             rating: parseFloat(r.rating),
             size: r.size.trim().toLowerCase(),
           }));
-        console.log('📌 Parsed Reviews:', validReviews);
         setReviews(validReviews);
       });
   }, []);

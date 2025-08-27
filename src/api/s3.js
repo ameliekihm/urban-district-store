@@ -1,12 +1,22 @@
-import { useState } from 'react';
-
 export async function getUploadUrl(fileName, fileType) {
   const response = await fetch(window.env.REACT_APP_LAMBDA_UPLOAD_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fileName, fileType }),
   });
-  return response.json();
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to get upload URL: ${errorText}`);
+  }
+
+  const data = await response.json();
+
+  if (!data.uploadUrl) {
+    throw new Error('Upload URL missing from Lambda response');
+  }
+
+  return data.uploadUrl;
 }
 
 export async function uploadToS3(uploadUrl, file) {
@@ -19,7 +29,7 @@ export async function uploadToS3(uploadUrl, file) {
   });
 
   if (!res.ok) {
-    throw new Error('S3 upload failed.');
+    throw new Error('S3 upload failed');
   }
 
   return uploadUrl.split('?')[0];

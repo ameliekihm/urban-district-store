@@ -6,19 +6,39 @@ import useCart from '../hooks/useCart';
 const ICON_CLASS =
   'transition-all cursor-pointer hover:text-red-600 hover:scale-105 mx-1';
 
-export default function CartItem({
-  product,
-  product: { id, image, title, option, quantity, price },
-}) {
+export default function CartItem({ product }) {
   const { addOrUpdateItem, removeItem } = useCart();
+
+  const snapshot = product.snapshot || {};
+  const id = product.productId || snapshot.id;
+  const image = snapshot.image || '/placeholder.png';
+  const title = snapshot.title || 'Untitled';
+  const option = snapshot.option || '';
+  const price = snapshot.price || 0;
+  const quantity = product.quantity || 1;
+
   const handleMinus = () => {
     if (quantity < 2) return;
-    addOrUpdateItem.mutate({ ...product, quantity: quantity - 1 });
+    addOrUpdateItem.mutate({
+      ...product,
+      snapshot,
+      quantity: quantity - 1,
+      productId: id,
+    });
   };
-  const handlePlus = () =>
-    addOrUpdateItem.mutate({ ...product, quantity: quantity + 1 });
 
-  const handleDelete = () => removeItem.mutate(id);
+  const handlePlus = () => {
+    addOrUpdateItem.mutate({
+      ...product,
+      snapshot,
+      quantity: quantity + 1,
+      productId: id,
+    });
+  };
+
+  const handleDelete = () => {
+    removeItem.mutate(id);
+  };
 
   return (
     <li className='flex justify-between my-2 items-center'>
@@ -27,7 +47,7 @@ export default function CartItem({
         <div className='basis-3/5'>
           <p className='text-lg'>{title}</p>
           <p className='text-xl font-bold text-brand'>{option}</p>
-          <p>{`US $${price}.00`}</p>
+          <p>{`US $${price}`}</p>
         </div>
         <div className='text-2xl flex items-center'>
           <AiOutlineMinusSquare className={ICON_CLASS} onClick={handleMinus} />
