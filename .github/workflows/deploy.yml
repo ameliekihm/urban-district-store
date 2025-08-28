@@ -23,6 +23,7 @@ jobs:
 
       - name: Generate env.js
         run: |
+          mkdir -p build
           echo "window.env = {
             REACT_APP_COGNITO_DOMAIN: '${{ secrets.REACT_APP_COGNITO_DOMAIN }}',
             REACT_APP_COGNITO_CLIENT_ID: '${{ secrets.REACT_APP_COGNITO_CLIENT_ID }}',
@@ -35,7 +36,7 @@ jobs:
             REACT_APP_DDB_CARTS_TABLE: '${{ secrets.REACT_APP_DDB_CARTS_TABLE }}',
             REACT_APP_LAMBDA_UPLOAD_URL: '${{ secrets.REACT_APP_LAMBDA_UPLOAD_URL }}',
             REACT_APP_API_GATEWAY_URL: '${{ secrets.REACT_APP_API_GATEWAY_URL }}'
-          };" > public/env.js
+          };" > build/env.js
 
       - name: Build project
         run: npm run build
