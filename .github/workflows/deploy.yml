@@ -21,6 +21,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Generate env.js
+        run: |
+          echo "window.env = {
+            REACT_APP_COGNITO_DOMAIN: '${{ secrets.REACT_APP_COGNITO_DOMAIN }}',
+            REACT_APP_COGNITO_CLIENT_ID: '${{ secrets.REACT_APP_COGNITO_CLIENT_ID }}',
+            REACT_APP_COGNITO_SIGNIN_REDIRECT_URI: '${{ secrets.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI }}',
+            REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI: '${{ secrets.REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI }}',
+            REACT_APP_AWS_REGION: '${{ secrets.REACT_APP_AWS_REGION }}',
+            REACT_APP_COGNITO_USER_POOL_ID: '${{ secrets.REACT_APP_COGNITO_USER_POOL_ID }}',
+            REACT_APP_COGNITO_IDENTITY_POOL_ID: '${{ secrets.REACT_APP_COGNITO_IDENTITY_POOL_ID }}',
+            REACT_APP_DDB_PRODUCTS_TABLE: '${{ secrets.REACT_APP_DDB_PRODUCTS_TABLE }}',
+            REACT_APP_DDB_CARTS_TABLE: '${{ secrets.REACT_APP_DDB_CARTS_TABLE }}',
+            REACT_APP_LAMBDA_UPLOAD_URL: '${{ secrets.REACT_APP_LAMBDA_UPLOAD_URL }}',
+            REACT_APP_API_GATEWAY_URL: '${{ secrets.REACT_APP_API_GATEWAY_URL }}'
+          };" > public/env.js
+
       - name: Build project
         run: npm run build
 
