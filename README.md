@@ -6,22 +6,21 @@
 
 ###### 1. Product Details Page
 <p align="center">
-<img width="766" alt="Screenshot 2024-08-10 at 9 10 30 PM" src="https://github.com/user-attachments/assets/3ebde770-8258-4e76-b5f6-dc94bcd7cdf6">
+<img width="826" height="640" alt="Image" src="https://github.com/user-attachments/assets/ac2158af-2eb3-45c8-b458-b45e52989a5c" />
+
 </p>
 
 
 ###### 2. Shopping Bag Page
 <p align="center">
-<img width="766" alt="Screenshot 2024-08-10 at 9 11 45 PM" src="https://github.com/user-attachments/assets/d5a15c8f-33a6-42b7-8410-8955d21670a1">
+<img width="755" height="640" alt="Image" src="https://github.com/user-attachments/assets/4fc54046-8a04-4d11-979e-090fb4c82111" />
 </p>
 
 ###### 3. Add New Product Page for Admin Account
 <p align="center">
-<img width="766" alt="Screenshot 2024-08-10 at 9 09 46 PM" src="https://github.com/user-attachments/assets/66f49f95-ddb3-446e-9a84-c997b0d103a1">
+ <img width="766" height="640" alt="Image" src="https://github.com/user-attachments/assets/97359127-fe02-4fef-b2f1-64aa5622f621" />
 </p>
 
-
-Click here to view the live project deployed on Netlify. ➡️ https://urban-district.netlify.app/
 
 ## Description
 

@@ -30,6 +30,7 @@ const Callback = () => {
 
         const { id_token, access_token } = res.data;
 
+
         localStorage.setItem('id_token', id_token);
         localStorage.setItem('access_token', access_token);
 
@@ -47,6 +48,7 @@ const Callback = () => {
         navigate('/');
       } catch (error) {
         console.error('Token or profile fetch failed:', error);
+
       }
     };
 
@@ -55,6 +57,7 @@ const Callback = () => {
 
   return <p>Logging in...</p>;
 };
+
 
 function parseJwt(token) {
   try {

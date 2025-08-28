@@ -110,6 +110,7 @@ function parseJwt(token) {
       picture: payload.picture,
       email: payload.email,
       groups: payload['cognito:groups'] || [],
+
     };
   } catch {
     return null;

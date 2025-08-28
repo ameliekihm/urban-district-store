@@ -55,7 +55,6 @@ export default function Navbar() {
             <span className='text-gray-800'>{user.name}</span>
           </div>
         )}
-
         {!user && <Button text='Login' onClick={login} />}
         {user && <Button text='Logout' onClick={logout} />}
       </nav>
