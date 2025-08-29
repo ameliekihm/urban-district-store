@@ -28,8 +28,13 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cp public/env.local.js public/env.js && react-scripts start",
+    "build:dev": "cp public/env.development.js public/env.js && react-scripts build",
+    "build:staging": "cp public/env.staging.js public/env.js && react-scripts build",
+    "build:prod": "cp public/env.production.js public/env.js && react-scripts build",
+    "deploy:dev": "yarn build:dev && aws s3 sync build/ s3://urban-district-dev/ --delete && aws cloudfront create-invalidation --distribution-id E2ND9CQFOBAJ32 --paths '/*' && open https://dev.urban-district.click",
+    "deploy:staging": "yarn build:staging && aws s3 sync build/ s3://urban-district-staging/ --delete && aws cloudfront create-invalidation --distribution-id E1BEU6MYHHLN3W --paths '/*' && open https://staging.urban-district.click",
+    "deploy:prod": "yarn build:prod && aws s3 sync build/ s3://urban-district.click/ --delete && aws cloudfront create-invalidation --distribution-id E1JEBAR6H9BLMF --paths '/*' && open https://urban-district.click",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
