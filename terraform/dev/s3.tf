@@ -1,13 +1,27 @@
-locals {
-  bucket_name = var.env == "prod" ? "urban-district.click" : "urban-district-${var.env}"
-}
-
 resource "aws_s3_bucket" "frontend" {
-  bucket = local.bucket_name
+  bucket = "urban-district-${var.env}"
 
   tags = {
     Environment = var.env
-    Project     = var.project
+    Project     = "urban-district"
+  }
+}
+
+resource "aws_s3_bucket_ownership_controls" "frontend" {
+  bucket = aws_s3_bucket.frontend.id
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "frontend" {
+  bucket = aws_s3_bucket.frontend.id
+
+  rule {
+    bucket_key_enabled = true
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
   }
 }
 
@@ -26,49 +40,23 @@ resource "aws_s3_bucket_website_configuration" "frontend" {
 resource "aws_s3_bucket_policy" "frontend" {
   bucket = aws_s3_bucket.frontend.id
 
-  policy = var.env == "prod" ? jsonencode({
-    Version = "2012-10-17"
+  policy = jsonencode({
+    Version = "2012-10-17",
     Statement = [
       {
-        Sid    = "AllowCloudFrontOAI"
-        Effect = "Allow"
+        Sid       = "AllowCloudFrontServicePrincipal",
+        Effect    = "Allow",
         Principal = {
-          AWS = aws_cloudfront_origin_access_identity.frontend.iam_arn
+          Service = "cloudfront.amazonaws.com"
+        },
+        Action   = "s3:GetObject",
+        Resource = "arn:aws:s3:::${aws_s3_bucket.frontend.id}/*",
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = "arn:aws:cloudfront::835175800383:distribution/E2ND9CQFOBAJ32"
+          }
         }
-        Action   = ["s3:GetObject"]
-        Resource = "arn:aws:s3:::${aws_s3_bucket.frontend.bucket}/*"
-      }
-    ]
-  }) : jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid       = "AllowPublicRead"
-        Effect    = "Allow"
-        Principal = "*"
-        Action    = "s3:GetObject"
-        Resource  = "arn:aws:s3:::${aws_s3_bucket.frontend.bucket}/*"
       }
     ]
   })
-}
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "frontend" {
-  bucket = aws_s3_bucket.frontend.id
-
-  rule {
-    bucket_key_enabled = true
-
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
-    }
-  }
-}
-
-resource "aws_s3_bucket_ownership_controls" "frontend" {
-  bucket = aws_s3_bucket.frontend.id
-
-  rule {
-    object_ownership = "BucketOwnerEnforced"
-  }
 }
