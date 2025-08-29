@@ -22,8 +22,20 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 public/env.js
-# Terraform local state files
-.terraform/
+
+# Terraform local cache
+**/.terraform/
+**/.terraform.lock.hcl
+
+# Terraform state files
 *.tfstate
 *.tfstate.backup
-.terraform.lock.hcl
+*.tfstate.lock.info
+
+# Terraform variable files 
+*.tfvars
+
+# Backend config files 
+terraform/dev/backend-dev.hcl
+terraform/staging/backend-staging.hcl
+terraform/prod/backend-prod.hcl
