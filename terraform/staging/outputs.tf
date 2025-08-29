@@ -4,9 +4,9 @@ output "project_name" {
 }
 
 output "environment" {
-  description = "Deployment environment"
-  value       = var.env
+  value = var.env
 }
+
 
 output "domain" {
   description = "Root domain name"

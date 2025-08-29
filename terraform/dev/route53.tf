@@ -1,11 +1,11 @@
 data "aws_route53_zone" "primary" {
-  name         = var.root_domain
+  name         = "urban-district.click"
   private_zone = false
 }
 
 resource "aws_route53_record" "frontend" {
   zone_id = data.aws_route53_zone.primary.zone_id
-  name    = local.cf_domain
+  name    = "${var.env}.urban-district.click"
   type    = "A"
 
   alias {
