@@ -21,7 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-public/env.js
+/public/env*.js
 
 # Terraform local cache
 **/.terraform/
@@ -39,3 +39,5 @@ public/env.js
 terraform/dev/backend-dev.hcl
 terraform/staging/backend-staging.hcl
 terraform/prod/backend-prod.hcl
+
+
