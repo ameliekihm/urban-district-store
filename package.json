@@ -2,7 +2,7 @@
   "name": "shoppy",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72",
+  "packageManager": "yarn@4.9.4",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.873.0",
     "@aws-sdk/client-ssm": "^3.873.0",
@@ -29,6 +29,7 @@
   },
   "scripts": {
     "start": "cp public/env.local.js public/env.js && react-scripts start",
+    "build": "react-scripts build",
     "build:dev": "cp public/env.development.js public/env.js && react-scripts build",
     "build:staging": "cp public/env.staging.js public/env.js && react-scripts build",
     "build:prod": "cp public/env.production.js public/env.js && react-scripts build",

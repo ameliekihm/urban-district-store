@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - staging
+      - feature/dev
 
 jobs:
   deploy:
@@ -18,27 +20,49 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Generate env.js
+      - name: Enable Corepack and Yarn 4
         run: |
+          corepack enable
+          yarn set version stable
+          yarn --version
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Generate env.js by branch
+        run: |
+          BRANCH="${GITHUB_REF##*/}"
+
+          if [[ "$BRANCH" == "main" ]]; then
+            SIGNIN="${{ secrets.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI_PROD }}"
+            SIGNOUT="${{ secrets.REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI_PROD }}"
+            API="${{ secrets.REACT_APP_API_GATEWAY_URL_PROD }}"
+          elif [[ "$BRANCH" == "staging" ]]; then
+            SIGNIN="${{ secrets.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI_STAGING }}"
+            SIGNOUT="${{ secrets.REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI_STAGING }}"
+            API="${{ secrets.REACT_APP_API_GATEWAY_URL_STAGING }}"
+          else
+            SIGNIN="${{ secrets.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI_DEV }}"
+            SIGNOUT="${{ secrets.REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI_DEV }}"
+            API="${{ secrets.REACT_APP_API_GATEWAY_URL_DEV }}"
+          fi
+
           echo "window.env = {
+            REACT_APP_COGNITO_SIGNIN_REDIRECT_URI: '$SIGNIN',
+            REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI: '$SIGNOUT',
+            REACT_APP_API_GATEWAY_URL: '$API',
             REACT_APP_COGNITO_DOMAIN: '${{ secrets.REACT_APP_COGNITO_DOMAIN }}',
             REACT_APP_COGNITO_CLIENT_ID: '${{ secrets.REACT_APP_COGNITO_CLIENT_ID }}',
-            REACT_APP_COGNITO_SIGNIN_REDIRECT_URI: '${{ secrets.REACT_APP_COGNITO_SIGNIN_REDIRECT_URI }}',
-            REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI: '${{ secrets.REACT_APP_COGNITO_SIGNOUT_REDIRECT_URI }}',
             REACT_APP_AWS_REGION: '${{ secrets.REACT_APP_AWS_REGION }}',
             REACT_APP_COGNITO_USER_POOL_ID: '${{ secrets.REACT_APP_COGNITO_USER_POOL_ID }}',
             REACT_APP_COGNITO_IDENTITY_POOL_ID: '${{ secrets.REACT_APP_COGNITO_IDENTITY_POOL_ID }}',
             REACT_APP_DDB_PRODUCTS_TABLE: '${{ secrets.REACT_APP_DDB_PRODUCTS_TABLE }}',
             REACT_APP_DDB_CARTS_TABLE: '${{ secrets.REACT_APP_DDB_CARTS_TABLE }}',
-            REACT_APP_LAMBDA_UPLOAD_URL: '${{ secrets.REACT_APP_LAMBDA_UPLOAD_URL }}',
-            REACT_APP_API_GATEWAY_URL: '${{ secrets.REACT_APP_API_GATEWAY_URL }}'
+            REACT_APP_LAMBDA_UPLOAD_URL: '${{ secrets.REACT_APP_LAMBDA_UPLOAD_URL }}'
           };" > public/env.js
 
       - name: Build project
-        run: npm run build
+        run: yarn build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -47,12 +71,32 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Deploy to S3
+      - name: Deploy to S3 by branch
         run: |
-          aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} --delete
+          BRANCH="${GITHUB_REF##*/}"
+
+          if [[ "$BRANCH" == "main" ]]; then
+            BUCKET=${{ secrets.S3_BUCKET_PROD }}
+          elif [[ "$BRANCH" == "staging" ]]; then
+            BUCKET=${{ secrets.S3_BUCKET_STAGING }}
+          else
+            BUCKET=${{ secrets.S3_BUCKET_DEV }}
+          fi
+
+          aws s3 sync build/ s3://$BUCKET --delete
 
       - name: Invalidate CloudFront cache
         run: |
+          BRANCH="${GITHUB_REF##*/}"
+
+          if [[ "$BRANCH" == "main" ]]; then
+            DIST_ID=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_PROD }}
+          elif [[ "$BRANCH" == "staging" ]]; then
+            DIST_ID=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_STAGING }}
+          else
+            DIST_ID=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_DEV }}
+          fi
+
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-id $DIST_ID \
             --paths "/*"
