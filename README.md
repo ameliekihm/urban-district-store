@@ -1,94 +1,94 @@
 # Urban District Store 🛍️
+<div align="center">
+   <img width="850" height="300" alt="Image" src="https://github.com/user-attachments/assets/8be9269f-9edc-4a9a-8d9a-b5594a0fe309" />
+</div>
 
 > **React + AWS Serverless + Terraform** e-commerce platform migrated from Firebase to AWS, featuring a fully automated multi-environment CI/CD pipeline.
-
----
 
 ## 1. Project Overview
 
 Urban District Store is a **React-based e-commerce platform** that allows users to browse products, manage shopping carts, and authenticate via Google OAuth2.  
 Originally built using **Firebase + Cloudinary + Netlify**, the project has been fully migrated to an **AWS Serverless Architecture** with Terraform-managed infrastructure and GitHub Actions CI/CD.
 
----
-
 ## 2. Live Demo
 
 | Environment     | URL                                                                  | Purpose             |
 | --------------- | -------------------------------------------------------------------- | ------------------- |
-| **Production**  | [urban-district.click](https://urban-district.click)                 | Live site           |
-| **Staging**     | [staging.urban-district.click](https://staging.urban-district.click) | Pre-release testing |
-| **Development** | [dev.urban-district.click](https://dev.urban-district.click)         | Active development  |
-
----
+| **Production**  | [https://urban-district.click](https://urban-district.click)                 | Live site           |
+| **Staging**     | [https://staging.urban-district.click](https://staging.urban-district.click) | Pre-release testing |
+| **Development** | [https://dev.urban-district.click](https://dev.urban-district.click)         | Active development  |
 
 ## 3. Key Features
 
-### Authentication & User Management
+- ### Authentication & User Management
+   - Google OAuth2 login using **AWS Cognito** (OIDC)
+   - Role-based admin support for product management
+   - Session persistence and profile synchronization
 
-- Google OAuth2 login using **AWS Cognito** (OIDC)
-- Role-based admin support for product management
-- Session persistence and profile synchronization
+- ### Product Management
+   - Create, edit, and delete products
+   - Image uploads using **AWS S3** (Lambda-based Pre-signed URL)
+   - Detailed product pages with customer reviews
 
-### Product Management
+- ### Shopping Cart & Orders
+   - Add/remove products from the cart
+   - DynamoDB-powered real-time updates
+   - Order summary with subtotal and shipping cost calculation
 
-- Create, edit, and delete products
-- Image uploads using **AWS S3** (Lambda-based Pre-signed URL)
-- Detailed product pages with customer reviews
+- ### Admin Features
+   - Role-based access control using AWS Cognito
+   - Admin users can see a pencil icon ✏️ in the top navigation bar
+     <img width="570" height="36" alt="Image" src="https://github.com/user-attachments/assets/b6c23459-5977-4157-9a61-154919942d0a" />
+   - Clicking the icon opens the Add New Product form
+   - New products are uploaded to AWS S3 (images) and stored in DynamoDB (metadata)
+   - Regular users cannot see the pencil icon or access the product upload page
 
-### Shopping Cart & Orders
-
-- Add/remove products from the cart
-- DynamoDB-powered real-time updates
-- Order summary with subtotal and shipping cost calculation
-
----
 
 ## 4. System Architecture
 
 ```plaintext
-React (Vite)
+React 
    │
    ├── CloudFront + S3 (Static Hosting)
    │
-   ├── Cognito (Google OAuth2)
+   ├── Cognito (Google OAuth2 + RBAC)
    │
    ├── API Gateway → Lambda → DynamoDB (Products & Carts)
    │
-   ├── S3 (Image Storage)
+   ├── S3 (Image Storage) ← Pre-signed URL via Lambda
    │
    └── Route 53 (HTTPS + Custom Domain)
+   │
+   └── SSM Parameter Store (Multi-Env Variable Management)
 ```
+<div align="center">
+   <img width="900" height="363" alt="Image" src="https://github.com/user-attachments/assets/342b7f4a-cf3a-46d1-9746-62f69c451542" />
+</div>
 
-![AWS Serverless Architecture](https://raw.githubusercontent.com/ameliekihm/urban-district/main/docs/architecture.png)
-
----
 
 ## 5. Infrastructure & Deployment
 
-### Multi-Environment Setup
+- ### Multi-Environment Setup
+  - Fully isolated environments: **dev**, **staging**, **prod**
+  - Separate AWS resources per environment: S3, CloudFront, Route53, Cognito, DynamoDB
+  - Managed entirely via **Terraform**
 
-- Fully isolated environments: **dev**, **staging**, **prod**
-- Separate AWS resources per environment: S3, CloudFront, Route53, Cognito, DynamoDB
-- Managed entirely via **Terraform**
-
-### CI/CD Pipeline
-
-- **Branch Strategy**:
-  - `feature/*` → `dev` → `staging` → `main`
+- ### CI/CD Pipeline
+   - **Branch Strategy**:
+    `feature/*`(`dev`) →  → `staging` → `main`
 - **Automatic Deployments**:
   - Pushing to `dev` → deploys to [dev.urban-district.click](https://dev.urban-district.click)
   - Pushing to `staging` → deploys to [staging.urban-district.click](https://staging.urban-district.click)
   - Merging to `main` → deploys to [urban-district.click](https://urban-district.click)
 
-![CI/CD Pipeline](https://raw.githubusercontent.com/ameliekihm/urban-district/main/docs/cicd.png)
+<div align="center">
+   <img width="819" height="331" alt="Image" src="https://github.com/user-attachments/assets/3cb19550-4b80-4d33-b88d-d5f3bed42fc6" />
+</div>
 
-### Terraform Highlights
-
-- Infrastructure as Code (**IaC**) for consistent, repeatable deployments
-- Uses `terraform refresh` to detect and resolve console drift
-- Environment-specific state files managed remotely
-
----
+- ### Terraform Highlights
+   - Infrastructure as Code (**IaC**) for consistent, repeatable deployments
+   - Uses `terraform refresh` to detect and resolve console drift
+   - Environment-specific state files managed remotely
 
 ## 6. Folder Structure
 
@@ -116,15 +116,15 @@ urban-district-store/
 └── package.json
 ```
 
----
+
 
 ## 7. Getting Started
 
 ```bash
 git clone https://github.com/ameliekihm/urban-district.git
 cd urban-district
-npm install
-npm run dev
+yarn install
+yarn start
 ```
 
 ### Environment Variables
@@ -132,19 +132,19 @@ npm run dev
 `.env.local` example:
 
 ```env
-VITE_API_URL=https://api.dev.urban-district.click
-VITE_COGNITO_DOMAIN=us-east-16o6di1fuy.auth.us-east-1.amazoncognito.com
-VITE_COGNITO_CLIENT_ID=xxxxxx
-VITE_S3_BUCKET=urban-district-dev
+REACT_APP_API_URL=https://api.dev.urban-district.click
+REACT_APP_COGNITO_DOMAIN=us-east-16o6di1fuy.auth.us-east-1.amazoncognito.com
+REACT_APP_COGNITO_CLIENT_ID=xxxxxx
+REACT_APP_S3_BUCKET=urban-district-dev
 ```
 
----
+
 
 ## 8. Tech Stack
 
 | Layer        | Technology                  |
 | ------------ | --------------------------- |
-| **Frontend** | React, Vite, Tailwind       |
+| **Frontend** | React, Tailwind CSS      |
 | **Auth**     | AWS Cognito + Google OAuth2 |
 | **Database** | AWS DynamoDB                |
 | **Storage**  | AWS S3                      |
@@ -152,7 +152,7 @@ VITE_S3_BUCKET=urban-district-dev
 | **Infra**    | Terraform, GitHub Actions   |
 | **Deploy**   | S3 + CloudFront + Route53   |
 
----
+
 
 ## 9. Project Timeline
 
@@ -167,7 +167,7 @@ VITE_S3_BUCKET=urban-district-dev
 | 2025.08.30 | Staging environment deployment       | `chore: initial staging setup for CI/CD deployment`                 |
 | 2025.09.01 | Synced production environment        | `chore(terraform/prod): sync prod environment with console values`  |
 
----
+
 
 ## 10. Learning Highlights
 
@@ -176,11 +176,3 @@ VITE_S3_BUCKET=urban-district-dev
 - Built environment-isolated infrastructure with **Terraform**
 - Implemented multi-environment **CI/CD** using GitHub Actions
 - Learned advanced AWS services: DynamoDB, S3, API Gateway, Lambda, CloudFront
-
----
-
-## 11. Next Steps
-
-- Add unit & integration testing via **Vitest + Playwright**
-- Implement checkout & payment integration (Stripe)
-- Improve API performance with caching (CloudFront + DynamoDB TTL)
