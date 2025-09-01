@@ -40,4 +40,24 @@ terraform/dev/backend-dev.hcl
 terraform/staging/backend-staging.hcl
 terraform/prod/backend-prod.hcl
 
+# Yarn cache
+.yarn/unplugged/
 
+# Terraform state & temp files
+*.tfstate
+*.tfstate.backup
+terraform/terraform/
+terraform/dev/current_state.txt
+
+# Local patches
+patch.diff
+
+# Lambda node_modules
+terraform/lambda/node_modules/
+terraform/lambda/dist/
+
+# Local terraform state
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
