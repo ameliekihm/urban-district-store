@@ -10,7 +10,12 @@
 Urban District Store is a **React-based e-commerce platform** that allows users to browse products, manage shopping carts, and authenticate via Google OAuth2.  
 Originally built using **Firebase + Cloudinary + Netlify**, the project has been fully migrated to an **AWS Serverless Architecture** with Terraform-managed infrastructure and GitHub Actions CI/CD.
 
-## 2. Live Demo
+## 2. Motivation
+Urban District Store is a fully self-directed `personal project` that started as a simple e-commerce platform using **Firebase** and **Netlify**.  
+While the original setup worked well at first, frequent **Netlify deployment failures** became a critical issue — even when environment variables were configured correctly, deployments would sometimes fail unexpectedly.
+To improve **deployment reliability** and reduce dependency on external build platforms, I decided to **migrate the entire platform to an AWS Serverless architecture**.  
+
+## 3. Live Demo
 
 | Environment     | URL                                                                  | Purpose             |
 | --------------- | -------------------------------------------------------------------- | ------------------- |
@@ -18,7 +23,7 @@ Originally built using **Firebase + Cloudinary + Netlify**, the project has been
 | **Staging**     | [https://staging.urban-district.click](https://staging.urban-district.click) | Pre-release testing |
 | **Development** | [https://dev.urban-district.click](https://dev.urban-district.click)         | Active development  |
 
-## 3. Key Features
+## 4. Key Features
 
 - ### Authentication & User Management
    - Google OAuth2 login using **AWS Cognito** (OIDC)
@@ -43,8 +48,7 @@ Originally built using **Firebase + Cloudinary + Netlify**, the project has been
    - New products are uploaded to AWS S3 (images) and stored in DynamoDB (metadata)
    - Regular users cannot see the pencil icon or access the product upload page
 
-
-## 4. System Architecture
+## 5. System Architecture
 
 ```plaintext
 React 
@@ -65,8 +69,7 @@ React
    <img width="900" height="363" alt="Image" src="https://github.com/user-attachments/assets/342b7f4a-cf3a-46d1-9746-62f69c451542" />
 </div>
 
-
-## 5. Infrastructure & Deployment
+## 6. Infrastructure & Deployment
 
 - ### Multi-Environment Setup
   - Fully isolated environments: **dev**, **staging**, **prod**
@@ -90,7 +93,7 @@ React
    - Uses `terraform refresh` to detect and resolve console drift
    - Environment-specific state files managed remotely
 
-## 6. Folder Structure
+## 7. Folder Structure
 
 ```plaintext
 urban-district-store/
@@ -116,7 +119,7 @@ urban-district-store/
 └── package.json
 ```
 
-## 7. Getting Started
+## 8. Getting Started
 
 ```bash
 git clone https://github.com/ameliekihm/urban-district.git
@@ -136,7 +139,7 @@ REACT_APP_COGNITO_CLIENT_ID=xxxxxx
 REACT_APP_S3_BUCKET=urban-district-dev
 ```
 
-## 8. Tech Stack
+## 9. Tech Stack
 <p align="left">
    <img src="https://img.shields.io/badge/React-20232A.svg?logo=react&logoColor=61DAFB" alt="React Badge" width="82">
    <img src="https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?logo=aws&logoColor=white" alt="AWS Badge" width="75">
@@ -156,7 +159,7 @@ REACT_APP_S3_BUCKET=urban-district-dev
 
 
 
-## 9. Project Timeline
+## 10. Project Timeline
 
 | Date       | Change                               | Commit                                                              |
 | ---------- | ------------------------------------ | ------------------------------------------------------------------- |
@@ -170,8 +173,7 @@ REACT_APP_S3_BUCKET=urban-district-dev
 | 2025.09.01 | Synced production environment        | `chore(terraform/prod): sync prod environment with console values`  |
 
 
-
-## 10. Learning Highlights
+## 11. Learning Highlights
 
 - Migrated from **Firebase** to a full **AWS Serverless Architecture**
 - Integrated **Cognito + Google OAuth2** authentication
@@ -179,7 +181,7 @@ REACT_APP_S3_BUCKET=urban-district-dev
 - Implemented multi-environment **CI/CD** using GitHub Actions
 - Learned advanced AWS services: DynamoDB, S3, API Gateway, Lambda, CloudFront
 
-## 11. Project Achievements
+## 12. Project Achievements
 
 | **Metric**             | **Before (Netlify + Firebase)** | **After (AWS + GitHub Actions)** | **Improvement**       | **Measurement Tools**          |
 |------------------------|---------------------------------|----------------------------------|------------------------|-------------------------------|
@@ -193,3 +195,6 @@ REACT_APP_S3_BUCKET=urban-district-dev
 > achieving **~70% faster deployments**, **~300% higher release frequency**,  
 > and improved **cost efficiency** by leveraging **S3, CloudFront, Cognito, DynamoDB, Lambda, Terraform, and GitHub Actions**.
 
+## 13. License
+
+This project is licensed under the [MIT License](./LICENSE).
