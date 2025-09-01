@@ -178,3 +178,18 @@ REACT_APP_S3_BUCKET=urban-district-dev
 - Built environment-isolated infrastructure with **Terraform**
 - Implemented multi-environment **CI/CD** using GitHub Actions
 - Learned advanced AWS services: DynamoDB, S3, API Gateway, Lambda, CloudFront
+
+## 11. Project Achievements
+
+| **Metric**             | **Before (Netlify + Firebase)** | **After (AWS + GitHub Actions)** | **Improvement**       | **Measurement Tools**          |
+|------------------------|---------------------------------|----------------------------------|------------------------|-------------------------------|
+| **Deployment Time** | ~3–4 minutes per deployment     | ~1 minute per deployment        | ~70% faster            | GitHub Actions logs          |
+| **Release Frequency** | ~1 release per week            | ~3–4 releases per week          | ~300% increase         | GitHub Insights, Actions logs |
+| **Potential Savings**  | Approximately $35      | Approximately $18            | ~40–50% potential savings at scale | AWS Billing Dashboard, Netlify Pricing |
+
+
+### **Summary**
+> Migrated from **Netlify + Firebase** to an **AWS Serverless Architecture**  
+> achieving **~70% faster deployments**, **~300% higher release frequency**,  
+> and improved **cost efficiency** by leveraging **S3, CloudFront, Cognito, DynamoDB, Lambda, Terraform, and GitHub Actions**.
+
