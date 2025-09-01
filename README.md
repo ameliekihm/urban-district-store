@@ -116,8 +116,6 @@ urban-district-store/
 └── package.json
 ```
 
-
-
 ## 7. Getting Started
 
 ```bash
@@ -138,9 +136,13 @@ REACT_APP_COGNITO_CLIENT_ID=xxxxxx
 REACT_APP_S3_BUCKET=urban-district-dev
 ```
 
-
-
 ## 8. Tech Stack
+<p align="left">
+   <img src="https://img.shields.io/badge/React-20232A.svg?logo=react&logoColor=61DAFB" alt="React Badge" width="82">
+   <img src="https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?logo=aws&logoColor=white" alt="AWS Badge" width="75">
+   <img src="https://img.shields.io/badge/Terraform-844FBA.svg?logo=terraform&logoColor=white" alt="Terraform Badge" width="118">
+   <img src="https://img.shields.io/badge/GitHub_Actions-2088FF.svg?logo=githubactions&logoColor=white" alt="GitHub Actions Badge" width="155">
+</p>
 
 | Layer        | Technology                  |
 | ------------ | --------------------------- |
