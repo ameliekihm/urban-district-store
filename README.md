@@ -1,137 +1,180 @@
-# Urban District Store 💟
-<p align="center">
-<img width="766" alt="Screenshot 2024-08-10 at 9 15 15 PM" src="https://github.com/user-attachments/assets/93bccf76-d213-40c2-939b-02cbed2748af">
+# Urban District Store 🛍️
+<div align="center">
+   <img width="850" height="300" alt="Image" src="https://github.com/user-attachments/assets/8be9269f-9edc-4a9a-8d9a-b5594a0fe309" />
+</div>
+
+> **React + AWS Serverless + Terraform** e-commerce platform migrated from Firebase to AWS, featuring a fully automated multi-environment CI/CD pipeline.
+
+## 1. Project Overview
+
+Urban District Store is a **React-based e-commerce platform** that allows users to browse products, manage shopping carts, and authenticate via Google OAuth2.  
+Originally built using **Firebase + Cloudinary + Netlify**, the project has been fully migrated to an **AWS Serverless Architecture** with Terraform-managed infrastructure and GitHub Actions CI/CD.
+
+## 2. Live Demo
+
+| Environment     | URL                                                                  | Purpose             |
+| --------------- | -------------------------------------------------------------------- | ------------------- |
+| **Production**  | [https://urban-district.click](https://urban-district.click)                 | Live site           |
+| **Staging**     | [https://staging.urban-district.click](https://staging.urban-district.click) | Pre-release testing |
+| **Development** | [https://dev.urban-district.click](https://dev.urban-district.click)         | Active development  |
+
+## 3. Key Features
+
+- ### Authentication & User Management
+   - Google OAuth2 login using **AWS Cognito** (OIDC)
+   - Role-based admin support for product management
+   - Session persistence and profile synchronization
+
+- ### Product Management
+   - Create, edit, and delete products
+   - Image uploads using **AWS S3** (Lambda-based Pre-signed URL)
+   - Detailed product pages with customer reviews
+
+- ### Shopping Cart & Orders
+   - Add/remove products from the cart
+   - DynamoDB-powered real-time updates
+   - Order summary with subtotal and shipping cost calculation
+
+- ### Admin Features
+   - Role-based access control using AWS Cognito
+   - Admin users can see a pencil icon ✏️ in the top navigation bar
+     <img width="570" height="36" alt="Image" src="https://github.com/user-attachments/assets/b6c23459-5977-4157-9a61-154919942d0a" />
+   - Clicking the icon opens the Add New Product form
+   - New products are uploaded to AWS S3 (images) and stored in DynamoDB (metadata)
+   - Regular users cannot see the pencil icon or access the product upload page
+
+
+## 4. System Architecture
+
+```plaintext
+React 
+   │
+   ├── CloudFront + S3 (Static Hosting)
+   │
+   ├── Cognito (Google OAuth2 + RBAC)
+   │
+   ├── API Gateway → Lambda → DynamoDB (Products & Carts)
+   │
+   ├── S3 (Image Storage) ← Pre-signed URL via Lambda
+   │
+   └── Route 53 (HTTPS + Custom Domain)
+   │
+   └── SSM Parameter Store (Multi-Env Variable Management)
+```
+<div align="center">
+   <img width="900" height="363" alt="Image" src="https://github.com/user-attachments/assets/342b7f4a-cf3a-46d1-9746-62f69c451542" />
+</div>
+
+
+## 5. Infrastructure & Deployment
+
+- ### Multi-Environment Setup
+  - Fully isolated environments: **dev**, **staging**, **prod**
+  - Separate AWS resources per environment: S3, CloudFront, Route53, Cognito, DynamoDB
+  - Managed entirely via **Terraform**
+
+- ### CI/CD Pipeline
+   - **Branch Strategy**:
+    `feature/*`(`dev`) →  → `staging` → `main`
+- **Automatic Deployments**:
+  - Pushing to `dev` → deploys to [dev.urban-district.click](https://dev.urban-district.click)
+  - Pushing to `staging` → deploys to [staging.urban-district.click](https://staging.urban-district.click)
+  - Merging to `main` → deploys to [urban-district.click](https://urban-district.click)
+
+<div align="center">
+   <img width="819" height="331" alt="Image" src="https://github.com/user-attachments/assets/3cb19550-4b80-4d33-b88d-d5f3bed42fc6" />
+</div>
+
+- ### Terraform Highlights
+   - Infrastructure as Code (**IaC**) for consistent, repeatable deployments
+   - Uses `terraform refresh` to detect and resolve console drift
+   - Environment-specific state files managed remotely
+
+## 6. Folder Structure
+
+```plaintext
+urban-district-store/
+├── .github/workflows/
+│   └── deploy.yml        # GitHub Actions for auto-deployment
+├── public/
+│   ├── env.*.js          # Environment-specific variables
+│   ├── images/
+│   ├── reviews.csv
+│   └── index.html
+├── src/
+│   ├── api/              # AWS API modules (DynamoDB, S3, SSM)
+│   ├── components/ui     # Reusable UI components
+│   ├── context           # Authentication context
+│   ├── hooks             # Custom React hooks
+│   ├── pages             # Product pages, Cart, Checkout, etc.
+│   └── App.js
+├── terraform/
+│   ├── dev/              # Dev environment Terraform configs
+│   ├── staging/          # Staging environment Terraform configs
+│   ├── prod/             # Production environment Terraform configs
+│   └── lambda/           # AWS Lambda source code
+└── package.json
+```
+
+## 7. Getting Started
+
+```bash
+git clone https://github.com/ameliekihm/urban-district.git
+cd urban-district
+yarn install
+yarn start
+```
+
+### Environment Variables
+
+`.env.local` example:
+
+```env
+REACT_APP_API_URL=https://api.dev.urban-district.click
+REACT_APP_COGNITO_DOMAIN=us-east-16o6di1fuy.auth.us-east-1.amazoncognito.com
+REACT_APP_COGNITO_CLIENT_ID=xxxxxx
+REACT_APP_S3_BUCKET=urban-district-dev
+```
+
+## 8. Tech Stack
+<p align="left">
+   <img src="https://img.shields.io/badge/React-20232A.svg?logo=react&logoColor=61DAFB" alt="React Badge" width="82">
+   <img src="https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?logo=aws&logoColor=white" alt="AWS Badge" width="75">
+   <img src="https://img.shields.io/badge/Terraform-844FBA.svg?logo=terraform&logoColor=white" alt="Terraform Badge" width="118">
+   <img src="https://img.shields.io/badge/GitHub_Actions-2088FF.svg?logo=githubactions&logoColor=white" alt="GitHub Actions Badge" width="155">
 </p>
 
-
-###### 1. Product Details Page
-<p align="center">
-<img width="826" height="640" alt="Image" src="https://github.com/user-attachments/assets/ac2158af-2eb3-45c8-b458-b45e52989a5c" />
-
-</p>
-
-
-###### 2. Shopping Bag Page
-<p align="center">
-<img width="755" height="640" alt="Image" src="https://github.com/user-attachments/assets/4fc54046-8a04-4d11-979e-090fb4c82111" />
-</p>
-
-###### 3. Add New Product Page for Admin Account
-<p align="center">
- <img width="766" height="640" alt="Image" src="https://github.com/user-attachments/assets/97359127-fe02-4fef-b2f1-64aa5622f621" />
-</p>
-
-
-## Description
-
-Welcome to Urban District, a responsive shopping mall web application designed to provide users with a seamless shopping experience. Built with React and Tailwind CSS, this application features a dynamic product catalog, a user-friendly shopping bag, and smooth user authentication through Firebase.
-
-## Features
-
-- **User Authentication**: Secure login and logout using Google accounts via Firebase Authentication.
--  **Responsive Design**: The website is fully responsive and adjusts to different screen sizes for optimal viewing.
-- **Admin Functionality**: Admin users have access to add new products to the store.
-- **Protected Shopping Bag**: The shopping bag is only accessible to logged-in users, ensuring that user-specific data remains secure.
-- **Product Catalog**: Browse a wide range of products with detailed descriptions, prices, and images.
-- **Product Detail Page**: View detailed information about each product, including size options and customer reviews.
-- **Shopping Bag**: Add products to the shopping bag, adjust quantities, and see real-time updates.
-- **Order Summary**: View a summary of your shopping bag, including subtotal, shipping costs, and the total amount.
-
-
-## Technologies Used
-
-- **React**: A powerful JavaScript library for building user interfaces.
-- **Tailwind CSS**: A utility-first CSS framework for creating responsive designs.
-- **React Router**: For handling navigation and routing.
-- **React Query**: For efficient data fetching and caching.
-- **Firebase**: For user authentication and real-time database management.
-- **Cloudinary**: For uploading and managing product images.
-
-
-## Components
-
-### 1. Navbar
-
-The `Navbar` component provides navigation across the application, including links to the product catalog, shopping bag, and user profile.
- 
-### 2. Banner
-
-The `Banner` component displays a prominent banner on the homepage.
-
-### 3. User
-
-The `User` component displays the user's profile information.
-
-### 4. Products
-
-The `Products` component lists all the products available in the store.
-
-### 5. ProductCard
-
-The `ProductCard` component represents an individual product in the product list. It displays the product image, title, category, and price. Clicking on the product navigates to the product detail page.
-
-### 6. CartItem
-
-The `CartItem` component represents an individual item in the shopping bag, allowing users to adjust quantities or remove the item.
-
-### 7. CartStatus
-
-The `CartStatus` component shows the number of items currently in the shopping bag, displayed as a badge on the shopping bag icon.
-
-### 8. PriceCard
-
-The `PriceCard` component displays the price details, including the subtotal, shipping costs, and total amount in the order summary.
-
-
-## Context
-
-### AuthContext
-
-The `AuthContext` handles user authentication status across the application, ensuring that user data is accessible and consistent.
-
-
-## Hooks
-
-### 1. useCart
-
-The `useCart` hook provides an interface for managing the shopping bag, including adding, updating, and removing items.
-
-### 2. useProducts
-
-The `useProducts` hook provides an interface for fetching product data and managing product-related mutations.
-
-
-## Pages
-
-### 1. AllProducts
-
-The `AllProducts` page displays all available products in the store.
- 
-### 2. Home
-
-The `Home` page serves as the landing page for the application, featuring the main banner and featured products.
-
-### 3. MyCart
-
-The `MyCart` page displays the user's shopping bag with the ability to modify product quantities and proceed to checkout. This page is protected and only accessible to logged-in users.
-
-### 4. NewProduct
-
-The `NewProduct` page allows authorized admin users to add new products to the store.
-
-### 5. ProductDetail
-
-The `ProductDetail` page provides detailed information about a selected product, including size options, customer reviews, and the ability to add the product to the shopping bag.
-
-### 6. ProtectedRoute
-
-The `ProtectedRoute` component restricts access to certain pages based on the user's authentication status.
-
-
-## Styling
-
-The application uses `Tailwind CSS` for styling. Tailwind CSS allows for easy and efficient styling by applying utility classes directly in the JSX code. The application supports a responsive design, adjusting to various screen sizes for an optimal user experience.
+| Layer        | Technology                  |
+| ------------ | --------------------------- |
+| **Frontend** | React, Tailwind CSS      |
+| **Auth**     | AWS Cognito + Google OAuth2 |
+| **Database** | AWS DynamoDB                |
+| **Storage**  | AWS S3                      |
+| **API**      | API Gateway + Lambda        |
+| **Infra**    | Terraform, GitHub Actions   |
+| **Deploy**   | S3 + CloudFront + Route53   |
 
 
 
+## 9. Project Timeline
 
+| Date       | Change                               | Commit                                                              |
+| ---------- | ------------------------------------ | ------------------------------------------------------------------- |
+| 2025.08.22 | Added Cognito-based Google login     | `feat: Implement Google login redirect with AWS Cognito`            |
+| 2025.08.23 | Migrated DB from Firebase → DynamoDB | `feat: migrate product & cart DB from Firebase to DynamoDB`         |
+| 2025.08.24 | Moved image uploads to S3            | `feat: migrate image upload from Cloudinary to AWS S3 using Lambda` |
+| 2025.08.27 | Converted APIs to serverless         | `feat: migrate product & cart APIs to AWS serverless architecture`  |
+| 2025.08.28 | Added Terraform IaC setup            | `feat(terraform): add IaC setup for dev/staging/prod`               |
+| 2025.08.29 | Implemented GitHub Actions CI/CD     | `chore: setup multi-environment CI/CD pipeline (dev/staging/prod)`  |
+| 2025.08.30 | Staging environment deployment       | `chore: initial staging setup for CI/CD deployment`                 |
+| 2025.09.01 | Synced production environment        | `chore(terraform/prod): sync prod environment with console values`  |
+
+
+
+## 10. Learning Highlights
+
+- Migrated from **Firebase** to a full **AWS Serverless Architecture**
+- Integrated **Cognito + Google OAuth2** authentication
+- Built environment-isolated infrastructure with **Terraform**
+- Implemented multi-environment **CI/CD** using GitHub Actions
+- Learned advanced AWS services: DynamoDB, S3, API Gateway, Lambda, CloudFront
