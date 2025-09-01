@@ -53,8 +53,7 @@ terraform/dev/current_state.txt
 patch.diff
 
 # Lambda node_modules
-terraform/lambda/node_modules/
-terraform/lambda/dist/
+terraform/lambda/
 
 # Local terraform state
 *.tfstate
